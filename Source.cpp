@@ -71,7 +71,7 @@ void Proces::utworz_proces(char nazwa[2], int rozmiar_programu, string lista_roz
 			{
 				k=i + listaProcesow.back().pobierz_PCB()->adres_pamieci_wlasnej;
 				if ((lista_rozkazow[i] >= 'a' && lista_rozkazow[i] <= 'z') || (lista_rozkazow[i] >= 'A' && lista_rozkazow[i] <= 'a') || (lista_rozkazow[i] >= '0' && lista_rozkazow[i] <= '9') || lista_rozkazow[i] == '*')
-					wskaznik_na_Pamiec_ram_dla_Procesow->wskaznik_na_RAM()[] = lista_rozkazow[i];
+					wskaznik_na_Pamiec_ram_dla_Procesow->wskaznik_na_RAM()[k] = lista_rozkazow[i];
 			}
 		}
 	}
