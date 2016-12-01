@@ -56,21 +56,25 @@ Proces::Proces(char nazwa[2])
 }
 void Proces::utworz_proces(char nazwa[2], int rozmiar_programu, string lista_rozkazow)
 {
+	cout << " Proces "<<this->pobierz_PCB()->nazwa<<" tworzy proces "<<nazwa<< endl;
 	if (znalezienie_bloku_PCB_o_podanej_nazwie(nazwa) == nullptr)
 	{
 		if (this->pobierz_PCB()->nazwa[0] != '*' && nazwa[0] == '*')
 			zakonczenie_nieprawidlowe("Proces niesystemowy probuje zatrzymac proces systemowy o nazwie " + nazwa[0] + nazwa[1]);
 		else
 		{
+			int k;
 			listaProcesow.push_back(Proces::Proces(nazwa));
 			doloczenie_bloku_PCB_do_lacuchow(listaProcesow.back().pobierz_PCB());
 			listaProcesow.back().pobierz_PCB()->wielkosc_pamieci_wlasnej = rozmiar_programu;
 			listaProcesow.back().pobierz_PCB()->adres_pamieci_wlasnej = wskaznik_na_Pamiec_ram_dla_Procesow->przydziel_pamiec(rozmiar_programu, listaProcesow.back().pobierz_PCB());
 			for (int i = 0; i<lista_rozkazow.size(); i++)
 			{
+				k=i + listaProcesow.back().pobierz_PCB()->adres_pamieci_wlasnej;
 				if ((lista_rozkazow[i] >= 'a' && lista_rozkazow[i] <= 'z') || (lista_rozkazow[i] >= 'A' && lista_rozkazow[i] <= 'a') || (lista_rozkazow[i] >= '0' && lista_rozkazow[i] <= '9') || lista_rozkazow[i] == '*')
-					wskaznik_na_Pamiec_ram_dla_Procesow->wskaznik_na_RAM()[i + listaProcesow.back().pobierz_PCB()->adres_pamieci_wlasnej] = lista_rozkazow[i];
+					wskaznik_na_Pamiec_ram_dla_Procesow->wskaznik_na_RAM()[k] = lista_rozkazow[i];
 			}
+			cout << " Proces " << nazwa << " utworzono proces " <<endl;
 		}
 	}
 	else
